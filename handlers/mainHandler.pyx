@@ -196,10 +196,7 @@ class handler(requestsManager.asyncRequestHandler):
 				userToken.resetQueue()
 			except exceptions.tokenNotFoundException:
 				# Token not found. Disconnect that user
-				responseData = serverPackets.loginError()
-				responseData += serverPackets.notification("Whoops! Something went wrong, please login again.")
-				log.warning("Received packet from unknown token ({}).".format(requestTokenString))
-				log.info("{} has been disconnected (invalid token)".format(requestTokenString))
+				responseData = serverPackets.banchoRestart(1)
 			finally:
 				# Unlock token
 				if userToken is not None:
